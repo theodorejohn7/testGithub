@@ -1,21 +1,23 @@
-name: ENV TEST
+name: Test
+
 on:
-  push:
-    branches:
-      - main
-env:
-  MONGODOMAIN: ${{ secrets.TODAY_SECRET }}
+  workflow_dispatch:
 
 jobs:
-    deploy:
-        runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-latest
 
-        steps:
-          - name: checkout
-            uses: actions/checkout@v1
+    steps:
+      - name: checkout
+        uses: actions/checkout@v1
 
-          - name: Env Checking
-            run: |
-              echo $MONGODOMAIN >> demo.txt
-              cat demo.txt
-              echo ${{ secrets.TODAY_SECRET }}
+      - name: executing remote ssh commands
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            ls -lrt
+            pwd
