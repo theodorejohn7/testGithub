@@ -16,4 +16,5 @@ jobs:
 
           - name: Env Checking
             run: |
-              echo $MONGODOMAIN
+              echo $MONGODOMAIN >> demo.txt
+              cat demo.txt
