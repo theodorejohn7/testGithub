@@ -1,0 +1,19 @@
+name: ENV TEST
+on:
+  push:
+    branches:
+      - main
+env:
+  MONGODOMAIN: ${{ secrets.TODAY_SECRET }}
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+
+        steps:
+          - name: checkout
+            uses: actions/checkout@v1
+
+          - name: Env Checking
+            run: |
+              echo $MONGODOMAIN
